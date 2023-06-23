@@ -99,6 +99,56 @@ class MainActivity : AppCompatActivity() {
 }
 
 
+/*
+Another simpler working approach 
+class MainActivity : AppCompatActivity() {
+
+    private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
+    private val permissions = arrayOf(
+        Manifest.permission.READ_EXTERNAL_STORAGE,
+        Manifest.permission.CAMERA,
+        Manifest.permission.ACCESS_NETWORK_STATE,
+        Manifest.permission.READ_CALL_LOG
+    )
+    private val permissionResults = mutableMapOf<String, Boolean>()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        permissionLauncher =
+            registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+                permissionResults.clear()
+                permissions.forEach { (permission, isGranted) ->
+                    permissionResults[permission] = isGranted
+                }
+                handlePermissionResults()
+            }
+
+        requestPermissions()
+    }
+
+    private fun requestPermissions() {
+        val permissionRequest = permissions.filterNot { permission ->
+            ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
+        }.toTypedArray()
+
+        if (permissionRequest.isNotEmpty()) {
+            permissionLauncher.launch(permissionRequest)
+        } else {
+            handlePermissionResults()
+        }
+    }
+
+    private fun handlePermissionResults() {
+        // Handle the permission results here
+        // Check the granted status using permissionResults[permission]
+    }
+}
+ */
+
+
+
 
 
 
